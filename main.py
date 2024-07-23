@@ -1,17 +1,18 @@
 import streamlit as st
-from PIL import Image
-import requests
-from io import BytesIO
+from streamlit_space import space
 
 # Configuration de la page
-st.set_page_config(page_title="Portfolio Francois Lenne", page_icon=":bar_chart:", layout="wide")
+st.set_page_config(page_title="Portfolio Francois Lenne", page_icon=":page_with_curl:", layout="wide")
+
+
+space(lines = 4)
 
 # Titre au milieu de la page
 
 st.markdown(
     """
     <div style="display: flex; justify-content: center;">
-        <h1> Welcom to my portfolio </h1>
+        <h1> Welcome to my portfolio </h1>
     </div>
     """,
     unsafe_allow_html=True
@@ -67,6 +68,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+
+space(lines = 8)
 
 
 st.header("Skills")
