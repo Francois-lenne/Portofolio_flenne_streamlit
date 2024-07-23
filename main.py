@@ -56,6 +56,11 @@ st.markdown(
             <h1>Francois Lenne</h1>
             <p>Bonjour, je suis Francois Lenne, un Data Engineer passionné par la manipulation et l'analyse des données. 
             Je suis spécialisé dans la création de pipelines de données robustes et évolutifs.</p>
+            <p align="center">
+              <a href="https://go-skill-icons.vercel.app/">
+                <img src="https://go-skill-icons.vercel.app/api/icons?i=py,js,pandas,r,bash,git,gcp,snowflake,github,githubactions,pbi,vscode,githubcopilot" />
+              </a>
+            </p>
         </div>
     </div>
     """,
@@ -167,16 +172,23 @@ st.markdown('</div></div>', unsafe_allow_html=True)
 st.header("Projets")
 
 
+description_play = "This project is about retriving data from my playstation account (time and game play) and store it in Bigquery"
 
-# Exemple de données pour row1 et row2
-row1 = [st, st]
-row2 = [st, st]
+
+description_biomethan = "This project is about retriving data from the french production of Biomethan and store it in Snowflake using GCP and snowflake tools to ingest csv automatically"
+
+description_github = "This project is about retriving data from the github account and store it in Redshift"
+
+
+Speedtest = "This project is about monitoring the speedtest of my internet connection and store it in postgresql"
+
+
 # Exemple de données pour les projets
 projects = [
-    {"image": "https://www.datascienceportfol.io/static/profile_pics/pr0_5F14FFB2BE1A3FA859D3.jpg", "title": "Projet 1", "description": "Description du projet 1", "link": "https://example.com/1"},
-    {"image": "https://via.placeholder.com/150", "title": "Projet 2", "description": "Description du projet 2", "link": "https://example.com/2"},
-    {"image": "https://via.placeholder.com/150", "title": "Projet 3", "description": "Description du projet 3", "link": "https://example.com/3"},
-    {"image": "https://via.placeholder.com/150", "title": "Projet 4", "description": "Description du projet 4", "link": "https://example.com/4"},
+    {"image": "C:/Users/flenne/Portofolio_flenne_streamlit/assets/playstation.jpg", "title": "Retriving Playsation data in Bigquery", "description": description_play, "link": "https://github.com/Francois-lenne/play-bq-gcp"},
+    {"image": "C:/Users/flenne/Portofolio_flenne_streamlit/assets/biomethane.jpg", "title": "Retriving the french production of Biomethan in Snowflake", "description": description_biomethan, "link": "https://github.com/Francois-lenne/biomethane"},
+    {"image": "C:/Users/flenne/Portofolio_flenne_streamlit/assets/github.png", "title": "Retrieve the Github data account in Redshift", "description": description_github, "link": "https://github.com/Francois-lenne/data_github"},
+    {"image": "C:/Users/flenne/Portofolio_flenne_streamlit/assets/speedtest.jpg", "title": "Speedtest monitoring", "description": Speedtest, "link": "https://github.com/Francois-lenne/speedtest_viz"},
 ]
 
 # Afficher les projets deux par deux
@@ -189,10 +201,32 @@ for i in range(0, len(projects), 2):
                 st.markdown(
                     f"""
                     <div style='border: 1px solid #ddd; padding: 10px; border-radius: 5px;'>
-                        <img src='{project["image"]}' style='width: 100%; border-radius: 5px;'/>
+                    """,
+                    unsafe_allow_html=True
+                )
+
+                st.markdown(
+                    f"""
+                    <style>
+                    .project-image {{
+                                        max-height: 100px;  /* Définir la hauteur maximale souhaitée */
+                                        width: auto;
+                                        display: block;
+                                        margin-left: auto;
+                                        margin-right: auto;
+                                    }}
+                                    </style>
+                                    """,
+                                    unsafe_allow_html=True
+                    )
+                                
+                st.image(project["image"], use_column_width=True, caption=project['title'], output_format='auto')
+
+                st.markdown(
+                    f"""
                         <h2 style='text-align: center;'>{project['title']}</h2>
                         <p style='text-align: center;'>{project['description']}</p>
-                        <p style='text-align: center;'><a href='{project['link']}' target='_blank'>Read more</a></p>
+                        <p style='text-align: center;'><a href='{project['link']}' target='_blank'>Github</a></p>
                         <p style='text-align: center;'><img src='https://go-skill-icons.vercel.app/api/icons?i=java,kotlin,nodejs,figma&titles=true' alt='My Skills'/></p>
                     </div>
                     """,
@@ -204,9 +238,9 @@ for i in range(0, len(projects), 2):
 st.header("Me Contacter")
 
 linkedin_button = """
-<a href="https://github.com/votreprofil" target="_blank">
+<a href="https://www.linkedin.com/in/fran%C3%A7ois-lenne-5975b9174/" target="_blank">
     <button style="
-        background-color: #56687a; 
+        background-color: #f5987e; 
         color: white; 
         padding: 15px 30px; 
         font-size: 20px; 
@@ -222,7 +256,7 @@ linkedin_button = """
 """
 
 github_button = """
-<a href="https://github.com/votreprofil" target="_blank">
+<a href="https://github.com/Francois-lenne" target="_blank">
     <button style="
         background-color: #333; 
         color: white; 
@@ -242,7 +276,7 @@ github_button = """
 
 
 email_button = """
-<a href="mailto:votremail@example.com" target="_blank">
+<a href="mailto:francois.lenne@hotmail.fr" target="_blank">
     <button style="
         background-color: #28a745; 
         color: white; 
