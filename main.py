@@ -6,24 +6,22 @@ from io import BytesIO
 # Configuration de la page
 st.set_page_config(page_title="Portfolio Francois Lenne", page_icon=":bar_chart:", layout="wide")
 
-# Partie Présentation
+# Titre au milieu de la page
+
 st.markdown(
     """
-    <style>
-    .centered-title {
-        text-align: center;
-    }
-    </style>
-    <h1 class="centered-title">Bienvenue sur mon Portfolio !</h1>
+    <div style="display: flex; justify-content: center;">
+        <h1> Welcom to my portfolio </h1>
+    </div>
     """,
     unsafe_allow_html=True
 )
 
-# Ajout de la photo
-# Télécharger et afficher l'image
+
+# URL de l'image
 image_url = "https://avatars.githubusercontent.com/u/114836746?v=4"
 
-
+# CSS pour l'image ronde et le conteneur
 st.markdown(
     """
     <style>
@@ -33,42 +31,137 @@ st.markdown(
         height: 400px; /* Ajustez la taille selon vos besoins */
         object-fit: cover;
     }
+    .container {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    .text-container {
+        display: flex;
+        flex-direction: column;
+    }
     </style>
     """,
     unsafe_allow_html=True
 )
 
+
+
+# Conteneur principal
 st.markdown(
     f"""
-    <img src="{image_url}" class="round-img">
+    <div class="container">
+        <img src="{image_url}" class="round-img">
+        <div class="text-container">
+            <h1>Francois Lenne</h1>
+            <p>Bonjour, je suis Francois Lenne, un Data Engineer passionné par la manipulation et l'analyse des données. 
+            Je suis spécialisé dans la création de pipelines de données robustes et évolutifs.</p>
+        </div>
+    </div>
     """,
     unsafe_allow_html=True
 )
 
-# Description
-st.write("""
-Bonjour, je suis [Votre Nom], un Data Engineer passionné par la manipulation et l'analyse des données. 
-Je suis spécialisé dans la création de pipelines de données robustes et évolutifs.
-""")
+
+
+st.header("Skills")
+
+st.subheader("Soft Skills")
+
+# CSS pour centrer le conteneur principal
+st.markdown(
+    """
+    <style>
+    .center-container {
+        display: flex;
+        justify-content: center;
+    }
+    .center-content {
+        width: 100%;
+        max-width: 800px; /* Ajustez cette largeur selon vos besoins */
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Trois colonnes */
+        gap: 20px; /* Ajustez cet écart selon vos besoins */
+        justify-items: center; /* Centre les éléments horizontalement */
+        align-items: center; /* Centre les éléments verticalement */
+    }
+    .grid-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Conteneur principal centré
+st.markdown('<div class="center-container"><div class="center-content">', unsafe_allow_html=True)
+
+skills = ["Curious", "team player", "adaptability", "problem solver", "Relational Skills", "Organize"]
+image_path = ["C:/Users/flenne/Portofolio_flenne_streamlit/assets/curious.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/team-player.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/adaptability.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/problem-solver.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/communication.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/organize.png"]
+
+# Affichage des skills en trois colonnes
+for i in range(0, len(skills), 3):
+    cols = st.columns(3)
+    for j, col in enumerate(cols):
+        if i + j < len(skills):
+            with col:
+                st.image(image_path[i+j], width=160)
+                st.markdown(f"<p style='font-size: 30px; font-weight: bold;'>{skills[i + j]}</p>", unsafe_allow_html=True)
+
+st.markdown('</div></div>', unsafe_allow_html=True)
+
+st.subheader("Hard Skills")
 
 
 
-st.header("Compétences")
 
-skills = {
-    "Python": "🐍",
-    "SQL": "🗄️",
-    "Apache Spark": "⚡",
-    "Hadoop": "🐘",
-    "Docker": "🐳",
-    "Kubernetes": "☸️",
-    "AWS": "☁️",
-    "GCP": "☁️",
-    "Azure": "☁️"
-}
+# CSS pour centrer le conteneur principal
+st.markdown(
+    """
+    <style>
+    .center-container {
+        display: flex;
+        justify-content: center;
+    }
+    .center-content {
+        width: 100%;
+        max-width: 800px; /* Ajustez cette largeur selon vos besoins */
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Trois colonnes */
+        gap: 20px; /* Ajustez cet écart selon vos besoins */
+        justify-items: center; /* Centre les éléments horizontalement */
+        align-items: center; /* Centre les éléments verticalement */
+    }
+    .grid-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-for skill, icon in skills.items():
-    st.write(f"{icon} {skill}")
+# Conteneur principal centré
+st.markdown('<div class="center-container"><div class="center-content">', unsafe_allow_html=True)
+
+skills = ["Quering data", "ETL", "data modeling", "data quality", "write code", "cloud computing"]
+image_path = ["C:/Users/flenne/Portofolio_flenne_streamlit/assets/interact-data.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/etl.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/data-modeling.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/quality.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/code.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/cloud-computing.png"]
+
+# Affichage des skills en trois colonnes
+for i in range(0, len(skills), 3):
+    cols = st.columns(3)
+    for j, col in enumerate(cols):
+        if i + j < len(skills):
+            with col:
+                st.image(image_path[i+j], width=160)
+                st.markdown(f"<p style='font-size: 30px; font-weight: bold;'>{skills[i + j]}</p>", unsafe_allow_html=True)
+
+st.markdown('</div></div>', unsafe_allow_html=True)
+
+
 
 # Partie Projets
 st.header("Projets")
