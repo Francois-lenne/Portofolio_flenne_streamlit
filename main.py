@@ -2,21 +2,48 @@ import streamlit as st
 from PIL import Image
 import requests
 from io import BytesIO
-import numpy as np
 
 # Configuration de la page
-st.set_page_config(page_title="Portfolio Data Engineer", page_icon=":bar_chart:", layout="wide")
+st.set_page_config(page_title="Portfolio Francois Lenne", page_icon=":bar_chart:", layout="wide")
 
 # Partie Présentation
-st.title("Portfolio Data Engineer")
-st.header("Présentation")
+st.markdown(
+    """
+    <style>
+    .centered-title {
+        text-align: center;
+    }
+    </style>
+    <h1 class="centered-title">Bienvenue sur mon Portfolio !</h1>
+    """,
+    unsafe_allow_html=True
+)
 
 # Ajout de la photo
 # Télécharger et afficher l'image
 image_url = "https://avatars.githubusercontent.com/u/114836746?v=4"
-response = requests.get(image_url)
-image = Image.open(BytesIO(response.content))
-st.image(image, caption='Votre Nom')
+
+
+st.markdown(
+    """
+    <style>
+    .round-img {
+        border-radius: 50%;
+        width: 400px; /* Ajustez la taille selon vos besoins */
+        height: 400px; /* Ajustez la taille selon vos besoins */
+        object-fit: cover;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    f"""
+    <img src="{image_url}" class="round-img">
+    """,
+    unsafe_allow_html=True
+)
 
 # Description
 st.write("""
@@ -24,13 +51,8 @@ Bonjour, je suis [Votre Nom], un Data Engineer passionné par la manipulation et
 Je suis spécialisé dans la création de pipelines de données robustes et évolutifs.
 """)
 
-# Bouton pour télécharger un PDF
-# with open("path_to_your_resume.pdf", "rb") as pdf_file:
-    # PDFbyte = pdf_file.read()
 
-# st.download_button(label="Télécharger mon CV", data=PDFbyte, file_name="CV_VotreNom.pdf", mime='application/octet-stream')
 
-# Partie Compétences
 st.header("Compétences")
 
 skills = {
@@ -89,9 +111,9 @@ for i in range(0, len(projects), 2):
 st.header("Me Contacter")
 
 linkedin_button = """
-<a href="https://www.linkedin.com/in/votreprofil" target="_blank">
+<a href="https://github.com/votreprofil" target="_blank">
     <button style="
-        background-color: #0077B5; 
+        background-color: #56687a; 
         color: white; 
         padding: 15px 30px; 
         font-size: 20px; 
@@ -100,8 +122,8 @@ linkedin_button = """
         cursor: pointer;
         transition: transform 0.3s;
     " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" style="width: 25px; height: 25px; vertical-align: middle; margin-right: 10px;">
-        LinkedIn
+        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="GitHub" style="width: 50px; height: 50px; vertical-align: middle; margin-right: 10px;">
+        Add me on linkedin !
     </button>
 </a>
 """
@@ -145,7 +167,7 @@ email_button = """
 """
 
 buttons_container = f"""
-<div style="display: flex; gap: 20px;">
+<div style="display: flex; justify-content: center; gap: 60px;">
     {linkedin_button}
     {github_button}
     {email_button}
