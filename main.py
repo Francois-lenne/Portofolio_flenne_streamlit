@@ -244,10 +244,10 @@ Speedtest = "This project is about monitoring the speedtest of my internet conne
 
 # Exemple de données pour les projets
 projects = [
-    {"image": f"{current_repo}/assets/playsation_illus.jpg", "title": "Retriving Playsation data in Bigquery", "description": description_play, "link": "https://github.com/Francois-lenne/play-bq-gcp"},
-    {"image": f"{current_repo}/assets/biogaz.jpg", "title": "Retriving the french production of Biomethan in Snowflake", "description": description_biomethan, "link": "https://github.com/Francois-lenne/biomethane"},
-    {"image": f"{current_repo}/assets/github-data.jpg", "title": "Retrieve the Github data account in Redshift", "description": description_github, "link": "https://github.com/Francois-lenne/data_github"},
-    {"image": f"{current_repo}/assets/speedtest.jpg", "title": "Speedtest monitoring", "description": Speedtest, "link": "https://github.com/Francois-lenne/speedtest_viz"},
+    {"image": f"{current_repo}/assets/playsation_illus.jpg", "title": "Retriving Playsation data in Bigquery", "description": description_play, "link": "https://github.com/Francois-lenne/play-bq-gcp", "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,bigquery,googlecloud&titles=true"},
+    {"image": f"{current_repo}/assets/biogaz.jpg", "title": "Retriving the french production of Biomethan in Snowflake", "description": description_biomethan, "link": "https://github.com/Francois-lenne/biomethane", "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,googlecloud,snowflake&titles=true"},
+    {"image": f"{current_repo}/assets/github-data.jpg", "title": "Retrieve the Github data account in Redshift", "description": description_github, "link": "https://github.com/Francois-lenne/data_github", "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,redshift,aws&titles=true"},
+    {"image": f"{current_repo}/assets/speedtest.jpg", "title": "Speedtest monitoring", "description": Speedtest, "link": "https://github.com/Francois-lenne/speedtest_viz" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,postgresql,bash&titles=true"},
 ]
 
 # Afficher les projets deux par deux
@@ -292,7 +292,7 @@ for i in range(0, len(projects), 2):
                         <h2 style='text-align: center;'>{project['title']}</h2>
                         <p style='text-align: center;'>{project['description']}</p>
                         <p style='text-align: center;'><a href='{project['link']}' target='_blank'>Github</a></p>
-                        <p style='text-align: center;'><img src='https://go-skill-icons.vercel.app/api/icons?i=java,kotlin,nodejs,figma&titles=true' alt='My Skills'/></p>
+                        <p style='text-align: center;'><img src='{project['icon']}'  alt='My Skills'/></p>
                     </div>
                     """,
                     unsafe_allow_html=True
