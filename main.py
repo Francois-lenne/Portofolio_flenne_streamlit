@@ -1,9 +1,14 @@
 import streamlit as st
 from streamlit_space import space
+from PIL import Image
+import os
 
 # Configuration de la page
 st.set_page_config(page_title="Portfolio Francois Lenne", page_icon=":page_with_curl:", layout="wide")
 
+
+current_repo = os.path.dirname(os.path.abspath(__file__))
+st.write(f"Current repository: {current_repo}")
 
 space(lines = 4)
 
@@ -107,7 +112,14 @@ st.markdown(
 st.markdown('<div class="center-container"><div class="center-content">', unsafe_allow_html=True)
 
 skills = ["Curious", "team player", "adaptability", "problem solver", "Relational Skills", "Organize"]
-image_path = ["C:/Users/flenne/Portofolio_flenne_streamlit/assets/curious.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/team-player.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/adaptability.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/problem-solver.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/communication.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/organize.png"]
+image_path = [
+    f"{current_repo}/assets/curious.png",
+    f"{current_repo}/assets/team-player.png",
+    f"{current_repo}/assets/adaptability.png",
+    f"{current_repo}/assets/problem-solver.png",
+    f"{current_repo}/assets/communication.png",
+    f"{current_repo}/assets/organize.png"
+]
 
 # Affichage des skills en trois colonnes
 for i in range(0, len(skills), 3):
@@ -116,9 +128,13 @@ for i in range(0, len(skills), 3):
         if i + j < len(skills):
             with col:
                 st.image(image_path[i+j], width=160)
+                space(lines = 1)
                 st.markdown(f"<p style='font-size: 30px; font-weight: bold;'>{skills[i + j]}</p>", unsafe_allow_html=True)
 
 st.markdown('</div></div>', unsafe_allow_html=True)
+
+
+space(lines = 5)
 
 st.subheader("Hard Skills")
 
@@ -156,7 +172,15 @@ st.markdown(
 st.markdown('<div class="center-container"><div class="center-content">', unsafe_allow_html=True)
 
 skills = ["Quering data", "ETL", "data modeling", "data quality", "write code", "cloud computing"]
-image_path = ["C:/Users/flenne/Portofolio_flenne_streamlit/assets/interact-data.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/etl.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/data-modeling.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/quality.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/code.png", "C:/Users/flenne/Portofolio_flenne_streamlit/assets/cloud-computing.png"]
+image_path = [
+    f"{current_repo}/assets/interact-data.png",
+    f"{current_repo}/assets/etl.png",
+    f"{current_repo}/assets/data-modeling.png",
+    f"{current_repo}/assets/quality.png",
+    f"{current_repo}/assets/code.png",
+    f"{current_repo}/assets/cloud-computing.png"
+]
+
 
 # Affichage des skills en trois colonnes
 for i in range(0, len(skills), 3):
@@ -169,6 +193,9 @@ for i in range(0, len(skills), 3):
 
 st.markdown('</div></div>', unsafe_allow_html=True)
 
+
+
+space(lines = 5)
 
 
 # Partie Projets
@@ -188,10 +215,10 @@ Speedtest = "This project is about monitoring the speedtest of my internet conne
 
 # Exemple de données pour les projets
 projects = [
-    {"image": "C:/Users/flenne/Portofolio_flenne_streamlit/assets/playstation.jpg", "title": "Retriving Playsation data in Bigquery", "description": description_play, "link": "https://github.com/Francois-lenne/play-bq-gcp"},
-    {"image": "C:/Users/flenne/Portofolio_flenne_streamlit/assets/biomethane.jpg", "title": "Retriving the french production of Biomethan in Snowflake", "description": description_biomethan, "link": "https://github.com/Francois-lenne/biomethane"},
-    {"image": "C:/Users/flenne/Portofolio_flenne_streamlit/assets/github.png", "title": "Retrieve the Github data account in Redshift", "description": description_github, "link": "https://github.com/Francois-lenne/data_github"},
-    {"image": "C:/Users/flenne/Portofolio_flenne_streamlit/assets/speedtest.jpg", "title": "Speedtest monitoring", "description": Speedtest, "link": "https://github.com/Francois-lenne/speedtest_viz"},
+    {"image": f"{current_repo}/assets/installation-de-biogaz.png", "title": "Retriving Playsation data in Bigquery", "description": description_play, "link": "https://github.com/Francois-lenne/play-bq-gcp"},
+    {"image": f"{current_repo}/assets/installation-de-biogaz.png", "title": "Retriving the french production of Biomethan in Snowflake", "description": description_biomethan, "link": "https://github.com/Francois-lenne/biomethane"},
+    {"image": f"{current_repo}/assets/quality.png", "title": "Retrieve the Github data account in Redshift", "description": description_github, "link": "https://github.com/Francois-lenne/data_github"},
+    {"image": f"{current_repo}/assets/etl.png", "title": "Speedtest monitoring", "description": Speedtest, "link": "https://github.com/Francois-lenne/speedtest_viz"},
 ]
 
 # Afficher les projets deux par deux
@@ -212,7 +239,7 @@ for i in range(0, len(projects), 2):
                     f"""
                     <style>
                     .project-image {{
-                                        max-height: 100px;  /* Définir la hauteur maximale souhaitée */
+                                        max-height: 13px;  /* Définir la hauteur maximale souhaitée */
                                         width: auto;
                                         display: block;
                                         margin-left: auto;
@@ -222,8 +249,14 @@ for i in range(0, len(projects), 2):
                                     """,
                                     unsafe_allow_html=True
                     )
+                
+                # Open the image
+                image = Image.open(project["image"])
+
+                # Display the image
+                st.image(image, use_column_width=True, output_format='png')
                                 
-                st.image(project["image"], use_column_width=True, caption=project['title'], output_format='auto')
+                # st.image(project["image"], use_column_width=True, caption=project['title'], output_format='auto')
 
                 st.markdown(
                     f"""
@@ -239,6 +272,9 @@ for i in range(0, len(projects), 2):
 
 # Partie Me Contacter
 st.header("Me Contacter")
+
+
+space(lines = 2)
 
 linkedin_button = """
 <a href="https://www.linkedin.com/in/fran%C3%A7ois-lenne-5975b9174/" target="_blank">
