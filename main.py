@@ -1,14 +1,43 @@
 import streamlit as st
 from streamlit_space import space
+import requests
 from PIL import Image
 import os
+import re
+
+
+
+# define function 
+
+
+def is_valid_email(email):
+    # Regex pour valider une adresse email
+    email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return re.match(email_regex, email) is not None
 
 # Configuration de la page
-st.set_page_config(page_title="Portfolio Francois Lenne", page_icon=":page_with_curl:", layout="wide")
+
+
+st.set_page_config(
+    page_title="Portfolio Francois Lenne",
+    page_icon=":page_with_curl:",
+    layout="wide",
+    initial_sidebar_state="expanded",
+    menu_items={
+        'Get Help': 'https://www.extremelycoolapp.com/help',
+        'Report a bug': "https://www.extremelycoolapp.com/bug",
+        'About': "# This is a header. This is an *extremely* cool app!"
+    }
+)
+
 
 
 current_repo = os.path.dirname(os.path.abspath(__file__))
-st.write(f"Current repository: {current_repo}")
+
+
+
+st.logo(f"{current_repo}/assets/linkedin-svg.svg", link= 'https://www.linkedin.com/in/fran%C3%A7ois-lenne-5975b9174/' )
+
 
 space(lines = 4)
 
@@ -215,10 +244,10 @@ Speedtest = "This project is about monitoring the speedtest of my internet conne
 
 # Exemple de données pour les projets
 projects = [
-    {"image": f"{current_repo}/assets/installation-de-biogaz.png", "title": "Retriving Playsation data in Bigquery", "description": description_play, "link": "https://github.com/Francois-lenne/play-bq-gcp"},
-    {"image": f"{current_repo}/assets/installation-de-biogaz.png", "title": "Retriving the french production of Biomethan in Snowflake", "description": description_biomethan, "link": "https://github.com/Francois-lenne/biomethane"},
-    {"image": f"{current_repo}/assets/quality.png", "title": "Retrieve the Github data account in Redshift", "description": description_github, "link": "https://github.com/Francois-lenne/data_github"},
-    {"image": f"{current_repo}/assets/etl.png", "title": "Speedtest monitoring", "description": Speedtest, "link": "https://github.com/Francois-lenne/speedtest_viz"},
+    {"image": f"{current_repo}/assets/playsation_illus.jpg", "title": "Retriving Playsation data in Bigquery", "description": description_play, "link": "https://github.com/Francois-lenne/play-bq-gcp"},
+    {"image": f"{current_repo}/assets/biogaz.jpg", "title": "Retriving the french production of Biomethan in Snowflake", "description": description_biomethan, "link": "https://github.com/Francois-lenne/biomethane"},
+    {"image": f"{current_repo}/assets/github-data.jpg", "title": "Retrieve the Github data account in Redshift", "description": description_github, "link": "https://github.com/Francois-lenne/data_github"},
+    {"image": f"{current_repo}/assets/speedtest.jpg", "title": "Speedtest monitoring", "description": Speedtest, "link": "https://github.com/Francois-lenne/speedtest_viz"},
 ]
 
 # Afficher les projets deux par deux
@@ -274,70 +303,25 @@ for i in range(0, len(projects), 2):
 st.header("Me Contacter")
 
 
-space(lines = 2)
+# Formulaire de contact
+with st.form(key='contact_form'):
+    name = st.text_input("Nom")
+    email = st.text_input("Votre adresse Email")
+    subject = st.text_input("Sujet")
+    message = st.text_area("Message")
+    
+    submit_button = st.form_submit_button(label='Envoyer')
 
-linkedin_button = """
-<a href="https://www.linkedin.com/in/fran%C3%A7ois-lenne-5975b9174/" target="_blank">
-    <button style="
-        background-color: #f5987e; 
-        color: white; 
-        padding: 15px 30px; 
-        font-size: 20px; 
-        border: none; 
-        border-radius: 5px; 
-        cursor: pointer;
-        transition: transform 0.3s;
-    " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="GitHub" style="width: 50px; height: 50px; vertical-align: middle; margin-right: 10px;">
-        Add me on linkedin !
-    </button>
-</a>
-"""
-
-github_button = """
-<a href="https://github.com/Francois-lenne" target="_blank">
-    <button style="
-        background-color: #333; 
-        color: white; 
-        padding: 15px 30px; 
-        font-size: 20px; 
-        border: none; 
-        border-radius: 5px; 
-        cursor: pointer;
-        transition: transform 0.3s;
-    " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-        <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" style="width: 50px; height: 50px; vertical-align: middle; margin-right: 10px;">
-        Check my github !
-    </button>
-</a>
-"""
-
-
-
-email_button = """
-<a href="mailto:francois.lenne@hotmail.fr" target="_blank">
-    <button style="
-        background-color: #28a745; 
-        color: white; 
-        padding: 15px 30px; 
-        font-size: 20px; 
-        border: none; 
-        border-radius: 5px; 
-        cursor: pointer;
-        transition: transform 0.3s;
-    " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-        <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" style="width: 50px; height: 50px; vertical-align: middle; margin-right: 10px;">
-        Email Me
-    </button>
-</a>
-"""
-
-buttons_container = f"""
-<div style="display: flex; justify-content: center; gap: 60px;">
-    {linkedin_button}
-    {github_button}
-    {email_button}
-</div>
-"""
-
-st.markdown(buttons_container, unsafe_allow_html=True)
+if submit_button:
+    if len(name) == 0:
+        st.error("Veuillez entrer votre nom.")
+    if len(email) == 0:
+        st.error("Veuillez entrer votre adresse email.")
+    elif not is_valid_email(email):
+        st.error("Veuillez entrer une adresse email valide.")
+    if len(subject) == 0:
+        st.error("Veuillez entrer le sujet de votre message.")
+    if len(message) == 0:
+        st.error("Veuillez entrer votre message.")
+    else:
+        st.success("Merci pour votre message ! Nous vous répondrons dès que possible.")
