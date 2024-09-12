@@ -248,6 +248,7 @@ projects = [
     {"image": f"{current_repo}/assets/biogaz.jpg", "title": "Retriving the french production of Biomethan in Snowflake", "description": description_biomethan, "link": "https://github.com/Francois-lenne/biomethane", "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,googlecloud,snowflake&titles=true"},
     {"image": f"{current_repo}/assets/github-data.jpg", "title": "Retrieve the Github data account in Redshift", "description": description_github, "link": "https://github.com/Francois-lenne/data_github", "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,redshift,aws&titles=true"},
     {"image": f"{current_repo}/assets/speedtest.jpg", "title": "Speedtest monitoring", "description": Speedtest, "link": "https://github.com/Francois-lenne/speedtest_viz" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,postgresql,bash&titles=true"},
+    {"image": f"{current_repo}/assets/speedtest.jpg", "title": "My Portfolio", "description": Speedtest, "link": "https://github.com/Francois-lenne/Portofolio_flenne_streamlit" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,streamlit&titles=true"},
 ]
 
 # Afficher les projets deux par deux
