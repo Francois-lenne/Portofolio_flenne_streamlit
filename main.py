@@ -231,6 +231,8 @@ space(lines = 5)
 st.header("Projets")
 
 
+# variable contenant la description des projets
+
 description_play = "This project is about retriving data from my playstation account (time and game play) and store it in Bigquery"
 
 
@@ -241,6 +243,8 @@ description_github = "This project is about retriving data from the github accou
 
 Speedtest = "This project is about monitoring the speedtest of my internet connection and store it in postgresql"
 
+portofolio = "This project is about creating my portofolio using streamlit"
+
 
 # Exemple de données pour les projets
 projects = [
@@ -248,7 +252,7 @@ projects = [
     {"image": f"{current_repo}/assets/biogaz.jpg", "title": "Retriving the french production of Biomethan in Snowflake", "description": description_biomethan, "link": "https://github.com/Francois-lenne/biomethane", "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,googlecloud,snowflake&titles=true"},
     {"image": f"{current_repo}/assets/github-data.jpg", "title": "Retrieve the Github data account in Redshift", "description": description_github, "link": "https://github.com/Francois-lenne/data_github", "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,redshift,aws&titles=true"},
     {"image": f"{current_repo}/assets/speedtest.jpg", "title": "Speedtest monitoring", "description": Speedtest, "link": "https://github.com/Francois-lenne/speedtest_viz" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,postgresql,bash&titles=true"},
-    {"image": f"{current_repo}/assets/speedtest.jpg", "title": "My Portfolio", "description": Speedtest, "link": "https://github.com/Francois-lenne/Portofolio_flenne_streamlit" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,streamlit&titles=true"},
+    {"image": f"{current_repo}/assets/portofolio.jpg", "title": "My Portfolio", "description": portofolio, "link": "https://github.com/Francois-lenne/Portofolio_flenne_streamlit" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,streamlit&titles=true"},
 ]
 
 # Afficher les projets deux par deux
