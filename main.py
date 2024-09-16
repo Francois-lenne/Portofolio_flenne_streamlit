@@ -4,16 +4,41 @@ import requests
 from PIL import Image
 import os
 import re
-
+import json
 
 
 # define function 
 
+# email validation
 
 def is_valid_email(email):
     # Regex pour valider une adresse email
     email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(email_regex, email) is not None
+
+
+# send slack message
+
+def send_slack_message(message):
+    """
+    Send a plain text message to Slack using a webhook URL.
+    
+    :param message: The message to send
+    :return: True if successful, False otherwise
+    """
+    webhook_url = st.secrets["slack_url"]
+    headers = {'Content-Type': 'application/json'}
+    data = {'text': message}
+    
+    try:
+        response = requests.post(webhook_url, headers=headers, data=json.dumps(data))
+        if response.status_code != 200:
+            print(f"Request to Slack returned an error {response.status_code}, the response is:\n{response.text}")
+            return False
+        return True
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+        return False
 
 # Configuration de la page
 
@@ -89,8 +114,7 @@ st.markdown(
         <img src="{image_url}" class="round-img">
         <div class="text-container">
             <h1>Francois Lenne</h1>
-            <p>Bonjour, je suis Francois Lenne, un Data Engineer passionné par la manipulation et l'analyse des données. 
-            Je suis spécialisé dans la création de pipelines de données robustes et évolutifs.</p>
+            <p> Hi, i'm François Lenne i'am a french data engineer  Don't hesitate to take a look of my projects nor to reach me ! </p>
             <p align="center">
               <a href="https://go-skill-icons.vercel.app/">
                 <img src="https://go-skill-icons.vercel.app/api/icons?i=py,js,pandas,r,bash,git,gcp,snowflake,github,githubactions,pbi,vscode,githubcopilot" />
@@ -228,8 +252,9 @@ space(lines = 5)
 
 
 # Partie Projets
-st.header("Projets")
+st.header("Projects")
 
+space(lines = 3)
 
 # variable contenant la description des projets
 
@@ -289,8 +314,6 @@ for i in range(0, len(projects), 2):
 
                 # Display the image
                 st.image(image, use_column_width=True, output_format='png')
-                                
-                # st.image(project["image"], use_column_width=True, caption=project['title'], output_format='auto')
 
                 st.markdown(
                     f"""
@@ -303,30 +326,44 @@ for i in range(0, len(projects), 2):
                     unsafe_allow_html=True
                 )
 
+space(lines = 5)
 
 # Partie Me Contacter
-st.header("Me Contacter")
+st.header("Contact me")
 
+space(lines = 3)
 
 # Formulaire de contact
 with st.form(key='contact_form'):
-    name = st.text_input("Nom")
-    email = st.text_input("Votre adresse Email")
-    subject = st.text_input("Sujet")
+    name = st.text_input("Name")
+    email = st.text_input("Your email adress") 
+    subject = st.text_input("Subject")
     message = st.text_area("Message")
     
-    submit_button = st.form_submit_button(label='Envoyer')
+    submit_button = st.form_submit_button(label='Send')
 
 if submit_button:
     if len(name) == 0:
-        st.error("Veuillez entrer votre nom.")
+        st.error("Enter your name.")
     if len(email) == 0:
-        st.error("Veuillez entrer votre adresse email.")
+        st.error("Enter an email adress.")
     elif not is_valid_email(email):
-        st.error("Veuillez entrer une adresse email valide.")
+        st.error("Enter a valid adress email")
     if len(subject) == 0:
-        st.error("Veuillez entrer le sujet de votre message.")
+        st.error("Enter the subject of your message.")
     if len(message) == 0:
-        st.error("Veuillez entrer votre message.")
+        st.error("Enter a message.")
     else:
-        st.success("Merci pour votre message ! Nous vous répondrons dès que possible.")
+        # Envoyer le message à Slack
+        slack_message = f"Name: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}"
+        
+        try:
+            success = send_slack_message(slack_message)
+            if success:
+                st.success("Your message is send ! I will contact you as soon as possible.")
+            else:
+                st.error("theres a problem with the message. Please try again later.")
+        except Exception as e:
+            st.error(f"theres a problem with the message. {str(e)}. please try again later.")
+
+
