@@ -1,2 +1,10 @@
 # Ignore the portofolio directory
 portofolio/
+.venv/
+.devcontainer/*
+.vscode/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/*
