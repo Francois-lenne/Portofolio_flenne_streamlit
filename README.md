@@ -9,7 +9,7 @@ The main goal of this project is to bulid my portfolio using python and streamli
 
 <p align="center">
   <a href="https://go-skill-icons.vercel.app/">
-    <img src="https://go-skill-icons.vercel.app/api/icons?i=py,streamlit" />
+    <img src="https://go-skill-icons.vercel.app/api/icons?i=py,streamlit,slack" />
   </a>
 </p>
 
