@@ -29,3 +29,12 @@ docker build -t [REGION]-docker.pkg.dev/[PROJET_ID]/[NOM_DU_REPO]/[NOM_IMAGE]:[T
 docker push [REGION]-docker.pkg.dev/[PROJET_ID]/[NOM_DU_REPO]/[NOM_IMAGE]:[TAG]
 
 
+# run the google cloud run 
+
+
+gcloud run deploy [NOM_SERVICE] \
+  --image=[REGION]-docker.pkg.dev/[PROJET_ID]/[NOM_DU_REPO]/[NOM_IMAGE]:[TAG] \
+  --platform=managed \
+  --region=[REGION] \
+  --port=8080 \
+  --allow-unauthenticated
