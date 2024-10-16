@@ -16,5 +16,7 @@ COPY . .
 # Expose the port that Streamlit will run on
 EXPOSE 8501
 
+ENV PORT 8080
+
 # Command to run the Streamlit app
-CMD ["streamlit", "run", "main.py"]
+CMD ["streamlit", "run", "main.py", "--server.port", "8080", "--server.enableCORS", "false"]
