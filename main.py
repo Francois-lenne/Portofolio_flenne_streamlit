@@ -26,10 +26,9 @@ def send_slack_message(message):
     :param message: The message to send
     :return: True if successful, False otherwise
     """
-    webhook_url = st.secrets["slack_url"]
+    webhook_url = os.getenv("SLACK_WEBHOOK_URL")
     headers = {'Content-Type': 'application/json'}
     data = {'text': message}
-    
     try:
         response = requests.post(webhook_url, headers=headers, data=json.dumps(data))
         if response.status_code != 200:
