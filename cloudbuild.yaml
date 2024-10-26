@@ -4,7 +4,7 @@ steps:
     args:
       - 'build'
       - '-t'
-      - '$$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPOSITORY/$$IMAGE:$$TAG'
+      - '$LOCATION-docker.pkg.dev/${PROJECT_ID}/$REPOSITORY/$IMAGE:$TAG'
       - '.'
     secretEnv:
       - 'LOCATION'
@@ -18,11 +18,11 @@ steps:
     args:
       - 'run'
       - 'deploy'
-      - '$$SERVICE_NAME'
+      - '$SERVICE_NAME'
       - '--image'
-      - '$$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPOSITORY/$$IMAGE:$$TAG'
+      - '$LOCATION-docker.pkg.dev/${PROJECT_ID}/$REPOSITORY/$IMAGE:$TAG'
       - '--region'
-      - '$$REGION'
+      - '$REGION'
       - '--platform'
       - 'managed'
     secretEnv:
