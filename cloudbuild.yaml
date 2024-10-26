@@ -6,11 +6,11 @@ steps:
       - |
         echo "Test de l'URL de l'image:"
         echo "$$_LOCATION-docker.pkg.dev/${PROJECT_ID}/$$_REPOSITORY/${_IMAGE}:${_TAG}"
-        echo "Location: ${_LOCATION}"
+        echo "Location: $$_LOCATION"
         echo "Repository: ${_REPOSITORY}"
         echo "Image: ${_IMAGE}"
         echo "Tag: ${_TAG}"
-    secretEnv: ['_LOCATION', '_REPOSITORY']
+    secretEnv: ['_LOCATION', '_REPOSITORY', '_IMAGE', '_TAG']
   # Ajouter cette étape au début des steps pour debug
   - name: 'bash'
     entrypoint: 'bash'
