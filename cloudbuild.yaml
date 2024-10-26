@@ -52,7 +52,7 @@ steps:
       - '${_REGION}'
       - '--platform'
       - 'managed'
-    secretEnv: ['USERNAME', 'PASSWORD']
+    secretEnv: ['_LOCATION', '_REPOSITORY']
 
 availableSecrets:
   secretManager:
