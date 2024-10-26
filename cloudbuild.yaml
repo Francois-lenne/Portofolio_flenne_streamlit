@@ -1,49 +1,49 @@
 steps:
-  # Build and push the container image to Artifact Registry
+  # Build et push de l'image container vers Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'build'
       - '-t'
-      - '$LOCATION-docker.pkg.dev/${PROJECT_ID}/$REPOSITORY/$IMAGE:$TAG'
+      - '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:${_TAG}'
       - '.'
     secretEnv:
-      - 'LOCATION'
-      - 'REPOSITORY'
-      - 'IMAGE'
-      - 'TAG'
+      - '_LOCATION'
+      - '_REPOSITORY'
+      - '_IMAGE'
+      - '_TAG'
 
-  # Deploy to Cloud Run
+  # Déploiement vers Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
       - 'run'
       - 'deploy'
-      - '$SERVICE_NAME'
+      - '${_SERVICE_NAME}'
       - '--image'
-      - '$LOCATION-docker.pkg.dev/${PROJECT_ID}/$REPOSITORY/$IMAGE:$TAG'
+      - '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:${_TAG}'
       - '--region'
-      - '$REGION'
+      - '${_REGION}'
       - '--platform'
       - 'managed'
     secretEnv:
-      - 'LOCATION'
-      - 'REPOSITORY'
-      - 'IMAGE'
-      - 'TAG'
-      - 'SERVICE_NAME'
-      - 'REGION'
+      - '_LOCATION'
+      - '_REPOSITORY'
+      - '_IMAGE'
+      - '_TAG'
+      - '_SERVICE_NAME'
+      - '_REGION'
 
 availableSecrets:
   secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/LOCATION/versions/latest
-      env: 'LOCATION'
-    - versionName: projects/$PROJECT_ID/secrets/REPOSITORY/versions/latest
-      env: 'REPOSITORY'
-    - versionName: projects/$PROJECT_ID/secrets/IMAGE/versions/latest
-      env: 'IMAGE'
-    - versionName: projects/$PROJECT_ID/secrets/TAG/versions/latest
-      env: 'TAG'
-    - versionName: projects/$PROJECT_ID/secrets/SERVICE_NAME/versions/latest
-      env: 'SERVICE_NAME'
-    - versionName: projects/$PROJECT_ID/secrets/REGION/versions/latest
-      env: 'REGION'
+    - versionName: projects/${PROJECT_ID}/secrets/_LOCATION/versions/latest
+      env: '_LOCATION'
+    - versionName: projects/${PROJECT_ID}/secrets/_REPOSITORY/versions/latest
+      env: '_REPOSITORY'
+    - versionName: projects/${PROJECT_ID}/secrets/_IMAGE/versions/latest
+      env: '_IMAGE'
+    - versionName: projects/${PROJECT_ID}/secrets/_TAG/versions/latest
+      env: '_TAG'
+    - versionName: projects/${PROJECT_ID}/secrets/_SERVICE_NAME/versions/latest
+      env: '_SERVICE_NAME'
+    - versionName: projects/${PROJECT_ID}/secrets/_REGION/versions/latest
+      env: '_REGION'
