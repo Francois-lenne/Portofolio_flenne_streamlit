@@ -1,46 +1,49 @@
-name: CI/CD Pipeline
+steps:
+  # Build and push the container image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '$$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPOSITORY/$$IMAGE:$$TAG'
+      - '.'
+    secretEnv:
+      - 'LOCATION'
+      - 'REPOSITORY'
+      - 'IMAGE'
+      - 'TAG'
 
-on:
-  push:
-    branches:
-      - main
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - '$$SERVICE_NAME'
+      - '--image'
+      - '$$LOCATION-docker.pkg.dev/${PROJECT_ID}/$$REPOSITORY/$$IMAGE:$$TAG'
+      - '--region'
+      - '$$REGION'
+      - '--platform'
+      - 'managed'
+    secretEnv:
+      - 'LOCATION'
+      - 'REPOSITORY'
+      - 'IMAGE'
+      - 'TAG'
+      - 'SERVICE_NAME'
+      - 'REGION'
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    env:
-      REGION: ${{ secrets.REGION }}
-      REPOSITORY: ${{ secrets.REPOSITORY }}
-      SERVICE: ${{ secrets.SERVICE }}
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@master
-      with:
-        version: 'latest'
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
-
-    - name: Configure Docker for Artifact Registry
-      run: |
-        gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
-
-    - name: Build Docker image
-      run: |
-        docker build -t ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }} .
-
-    - name: Push Docker image
-      run: |
-        docker push ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}
-
-    - name: Deploy to Cloud Run
-      run: |
-        gcloud run deploy ${{ env.SERVICE }} \
-          --image=${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }} \
-          --region=${{ env.REGION }} \
-          --platform=managed \
-          --allow-unauthenticated
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/LOCATION/versions/latest
+      env: 'LOCATION'
+    - versionName: projects/$PROJECT_ID/secrets/REPOSITORY/versions/latest
+      env: 'REPOSITORY'
+    - versionName: projects/$PROJECT_ID/secrets/IMAGE/versions/latest
+      env: 'IMAGE'
+    - versionName: projects/$PROJECT_ID/secrets/TAG/versions/latest
+      env: 'TAG'
+    - versionName: projects/$PROJECT_ID/secrets/SERVICE_NAME/versions/latest
+      env: 'SERVICE_NAME'
+    - versionName: projects/$PROJECT_ID/secrets/REGION/versions/latest
+      env: 'REGION'
