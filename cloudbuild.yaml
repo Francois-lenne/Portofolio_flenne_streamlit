@@ -5,11 +5,11 @@ steps:
       - '-c'
       - |
         echo "Test de l'URL de l'image:"
-        echo "$$_LOCATION-docker.pkg.dev/${PROJECT_ID}/$$_REPOSITORY/$$_IMAGE:$$_TAG}"
-        echo "Location: $$_LOCATION"
-        echo "Repository: $$_REPOSITORY"
-        echo "Image: $$_IMAGE"
-        echo "Tag: $$_TAG"
+        echo "$_LOCATION-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:${_TAG}"
+        echo "Location: $_LOCATION"
+        echo "Repository: $_REPOSITORY"
+        echo "Image: $_IMAGE"
+        echo "Tag: $_TAG"
     secretEnv: ['_LOCATION', '_REPOSITORY', '_IMAGE', '_TAG']
 
   # Build et push de l'image container vers Artifact Registry
@@ -17,7 +17,7 @@ steps:
     args:
       - 'build'
       - '-t'
-      - '$_LOCATION-docker.pkg.dev/$PROJECT_ID}/$_REPOSITORY/$_IMAGE:$_TAG'
+      - '$_LOCATION-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:${_TAG}'
       - '.'
     secretEnv: ['_LOCATION', '_REPOSITORY', '_IMAGE', '_TAG']
 
@@ -27,11 +27,11 @@ steps:
     args:
       - 'run'
       - 'deploy'
-      - '${_SERVICE_NAME}'
+      - '$_SERVICE_NAME'
       - '--image'
-      - '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:${_TAG}'
+      - '$_LOCATION-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:${_TAG}'
       - '--region'
-      - '${_REGION}'
+      - '$_REGION'
       - '--platform'
       - 'managed'
     secretEnv: ['_LOCATION', '_REPOSITORY', '_IMAGE', '_TAG', '_SERVICE_NAME', '_REGION']
