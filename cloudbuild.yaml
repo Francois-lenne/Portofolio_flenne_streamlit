@@ -11,33 +11,15 @@ steps:
         echo "Image: $$_IMAGE"
         echo "Tag: $$_TAG"
     secretEnv: ['_LOCATION', '_REPOSITORY', '_IMAGE', '_TAG']
-  # Ajouter cette étape au début des steps pour debug
-  - name: 'bash'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        echo "Test de l'URL de l'image:"
-        echo "$_LOCATION-docker.pkg.dev/$PROJECT_ID/$_REPOSITORY/$_IMAGE:$_TAG"
-    secretEnv:
-      - '_LOCATION'
-      - '_REPOSITORY'
-      - '_IMAGE'
-      - '_TAG'
-
 
   # Build et push de l'image container vers Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'build'
       - '-t'
-      - '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:${_TAG}'
+      - '$$_LOCATION-docker.pkg.dev/$$PROJECT_ID}/$$_REPOSITORY/$$_IMAGE:$$_TAG'
       - '.'
-    secretEnv:
-      - '_LOCATION'
-      - '_REPOSITORY'
-      - '_IMAGE'
-      - '_TAG'
+    secretEnv: ['_LOCATION', '_REPOSITORY', '_IMAGE', '_TAG']
 
   # Déploiement vers Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
