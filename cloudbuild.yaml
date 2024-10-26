@@ -5,17 +5,12 @@ steps:
       - '-c'
       - |
         echo "Test de l'URL de l'image:"
-        echo "${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:${_TAG}"
+        echo "$$_LOCATION-docker.pkg.dev/${PROJECT_ID}/$$_REPOSITORY/${_IMAGE}:${_TAG}"
         echo "Location: ${_LOCATION}"
         echo "Repository: ${_REPOSITORY}"
         echo "Image: ${_IMAGE}"
         echo "Tag: ${_TAG}"
-    secretEnv:
-      - '_LOCATION'
-      - '_REPOSITORY'
-      - '_IMAGE'
-      - '_TAG'
-
+    secretEnv: ['_LOCATION', '_REPOSITORY']
   # Ajouter cette étape au début des steps pour debug
   - name: 'bash'
     entrypoint: 'bash'
@@ -57,13 +52,7 @@ steps:
       - '${_REGION}'
       - '--platform'
       - 'managed'
-    secretEnv:
-      - '_LOCATION'
-      - '_REPOSITORY'
-      - '_IMAGE'
-      - '_TAG'
-      - '_SERVICE_NAME'
-      - '_REGION'
+    secretEnv: ['USERNAME', 'PASSWORD']
 
 availableSecrets:
   secretManager:
