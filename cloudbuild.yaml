@@ -15,7 +15,7 @@ steps:
   # Build et push de l'image container vers Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
-    args: [ '-c','docker build -t $$_LOCATION-docker.pkg.dev/$PROJECT_ID/$$_REPOSITORY/$$_IMAGE:$$_TAG .']
+    args: [ '-c','docker build -t $$_LOCATION-docker.pkg.dev/$PROJECT_ID/$$_REPOSITORY/$$_IMAGE:v1 .']
     secretEnv: ['_LOCATION', '_REPOSITORY', '_IMAGE', '_TAG']
 
 
