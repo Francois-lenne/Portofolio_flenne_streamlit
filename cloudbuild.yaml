@@ -24,11 +24,11 @@ steps:
     args:
       - 'run'
       - 'deploy'
-      - '$_SERVICE_NAME'
+      - '$$_SERVICE_NAME'
       - '--image'
       - '$$_LOCATION-docker.pkg.dev/${PROJECT_ID}/$$_REPOSITORY/$$_IMAGE:$$_TAG'
       - '--region'
-      - '$_REGION'
+      - '$$_REGION'
       - '--platform'
       - 'managed'
     secretEnv: ['_LOCATION', '_REPOSITORY', '_IMAGE', '_TAG', '_SERVICE_NAME', '_REGION']
