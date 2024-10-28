@@ -19,7 +19,7 @@ steps:
 # Variables substituables
 substitutions:
   _REGION: 'europe-west1'  # Région de votre registry
-  _REPOSITORY_NAME: 'my-streamlit'  # Nom de votre repository dans Artifact Registry
+  _REPOSITORY_NAME: 'streamlit'  # Nom de votre repository dans Artifact Registry
   _IMAGE_NAME: 'streamlit-portfolio'  # Nom de votre image
   _TAG: 'v1'  # Tag de l'image (utilise le SHA du commit par défaut)
 
