@@ -113,7 +113,7 @@ st.markdown(
         <img src="{image_url}" class="round-img">
         <div class="text-container">
             <h1>Francois Lenne</h1>
-            <p> Hi, i'm François Lenne i'am a french data engineer  Don't hesitate to take a look of my projects or my skills and contact me if you want to reach me ! </p>
+            <p> Hi, i'am a french data engineer  Don't hesitate to take a look of my projects or my skills and contact me if you want to reach me ! </p>
             <p align="center">
               <a href="https://go-skill-icons.vercel.app/">
                 <img src="https://go-skill-icons.vercel.app/api/icons?i=py,js,pandas,r,bash,git,gcp,snowflake,github,githubactions,pbi,vscode,githubcopilot" />
