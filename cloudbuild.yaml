@@ -1,47 +1,31 @@
+# cloudbuild.yaml
 steps:
-  - name: 'bash'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        echo "Test de l'URL de l'image:"
-        echo -n "$$_LOCATION-docker.pkg.dev/${PROJECT_ID}/$$_REPOSITORY/$$_IMAGE:$$_TAG"
-        echo "Location: $$_LOCATION"
-        echo "Repository: $$_REPOSITORY"
-        echo "Image: $$_IMAGE"
-        echo "Tag: $$_TAG"
-    secretEnv: ['_LOCATION', '_REPOSITORY', '_IMAGE', '_TAG']
-
-  # Build et push de l'image container vers Artifact Registry
+  # Étape 1: Construction de l'image Docker
   - name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
-    args: [ '-c','docker build -t $$_LOCATION-docker.pkg.dev/$PROJECT_ID/$$_REPOSITORY/$$_IMAGE:v1 .']
-    secretEnv: ['_LOCATION', '_REPOSITORY', '_IMAGE', '_TAG']
-
-
-  # Déploiement vers Cloud Run
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'bash'
     args:
-    - '-c'
-    - |
-      gcloud run deploy $$_SERVICE_NAME \
-      --image=$$_LOCATION-docker.pkg.dev/${PROJECT_ID}/$$_REPOSITORY/$$_IMAGE:$$_TAG \
-      --region=$$_REGION \
-      --platform=managed
-    secretEnv: ['_LOCATION', '_REPOSITORY', '_IMAGE', '_TAG', '_SERVICE_NAME', '_REGION']
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY_NAME}/${_IMAGE_NAME}:${_TAG}'
+      - '.'
+    id: 'build-image'
 
-availableSecrets:
-  secretManager:
-    - versionName: projects/${PROJECT_ID}/secrets/_LOCATION/versions/latest
-      env: '_LOCATION'
-    - versionName: projects/${PROJECT_ID}/secrets/_REPOSITORY/versions/latest
-      env: '_REPOSITORY'
-    - versionName: projects/${PROJECT_ID}/secrets/_IMAGE/versions/latest
-      env: '_IMAGE'
-    - versionName: projects/${PROJECT_ID}/secrets/_TAG/versions/latest
-      env: '_TAG'
-    - versionName: projects/${PROJECT_ID}/secrets/_SERVICE_NAME/versions/latest
-      env: '_SERVICE_NAME'
-    - versionName: projects/${PROJECT_ID}/secrets/_REGION/versions/latest
-      env: '_REGION'
+  # Étape 2: Push de l'image vers Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY_NAME}/${_IMAGE_NAME}:${_TAG}'
+    id: 'push-image'
+
+# Variables substituables
+substitutions:
+  _REGION: 'europe-west1'  # Région de votre registry
+  _REPOSITORY_NAME: 'my-streamlit'  # Nom de votre repository dans Artifact Registry
+  _IMAGE_NAME: 'streamlit-portfolio'  # Nom de votre image
+  _TAG: 'v1'  # Tag de l'image (utilise le SHA du commit par défaut)
+
+# Configuration des images à sauvegarder
+images:
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY_NAME}/${_IMAGE_NAME}:${_TAG}'
+
+# Timeout global du build (en secondes)
+timeout: '1200s'
