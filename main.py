@@ -280,7 +280,7 @@ projects = [
     {"image": f"{current_repo}/assets/github-data.jpg", "title": "Retrieve the Github data account in Redshift", "description": description_github, "link": "https://github.com/Francois-lenne/data_github", "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,redshift,aws&titles=true"},
     {"image": f"{current_repo}/assets/speedtest.jpg", "title": "Speedtest monitoring", "description": Speedtest, "link": "https://github.com/Francois-lenne/speedtest_viz" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,postgresql,bash&titles=true"},
     {"image": f"{current_repo}/assets/portofolio.jpg", "title": "My Portfolio", "description": portofolio, "link": "https://github.com/Francois-lenne/Portofolio_flenne_streamlit" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,streamlit&titles=true"},
-    {"image": f"{current_repo}/assets/vehicle_electric.jpg", "title": "Electric vehicle fleet", "description": vehicles, "link": "https://github.com/Francois-lenne/eletric_vehicle_usa" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=py,fabric,spark&titles=true"},
+    {"image": f"{current_repo}/assets/vehicle_electric.jpg", "title": "Amaerica's electric vehicle fleet", "description": vehicles, "link": "https://github.com/Francois-lenne/eletric_vehicle_usa" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=py,fabric,spark&titles=true"},
 ]
 
 # Afficher les projets deux par deux
