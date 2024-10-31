@@ -270,6 +270,9 @@ Speedtest = "This project is about monitoring the speedtest of my internet conne
 portofolio = "This project is about creating my portofolio using streamlit"
 
 
+vehicles = "This project is about monitoring the electric vehicle fleet in the us"
+
+
 # Exemple de données pour les projets
 projects = [
     {"image": f"{current_repo}/assets/playsation_illus.jpg", "title": "Retriving Playsation data in Bigquery", "description": description_play, "link": "https://github.com/Francois-lenne/play-bq-gcp", "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,bigquery,googlecloud&titles=true"},
@@ -277,6 +280,7 @@ projects = [
     {"image": f"{current_repo}/assets/github-data.jpg", "title": "Retrieve the Github data account in Redshift", "description": description_github, "link": "https://github.com/Francois-lenne/data_github", "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,redshift,aws&titles=true"},
     {"image": f"{current_repo}/assets/speedtest.jpg", "title": "Speedtest monitoring", "description": Speedtest, "link": "https://github.com/Francois-lenne/speedtest_viz" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,postgresql,bash&titles=true"},
     {"image": f"{current_repo}/assets/portofolio.jpg", "title": "My Portfolio", "description": portofolio, "link": "https://github.com/Francois-lenne/Portofolio_flenne_streamlit" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,streamlit&titles=true"},
+    {"image": f"{current_repo}/assets/portofolio.jpg", "title": "Electric vehicle fleet", "description": vehicles, "link": "https://github.com/Francois-lenne/eletric_vehicle_usa" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=py,fabric,spark&titles=true"},
 ]
 
 # Afficher les projets deux par deux
