@@ -1,5 +1,4 @@
 import streamlit as st
-from streamlit_space import space
 import requests
 from PIL import Image
 import os
@@ -7,366 +6,236 @@ import re
 import json
 
 
-# define function 
-
-# email validation
-
 def is_valid_email(email):
-    # Regex pour valider une adresse email
-    email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    return re.match(email_regex, email) is not None
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return re.match(pattern, email) is not None
 
-
-# send slack message
 
 def send_slack_message(message):
-    """
-    Send a plain text message to Slack using a webhook URL.
-    
-    :param message: The message to send
-    :return: True if successful, False otherwise
-    """
     webhook_url = os.getenv("SLACK_WEBHOOK_URL")
     headers = {'Content-Type': 'application/json'}
-    data = {'text': message}
     try:
-        response = requests.post(webhook_url, headers=headers, data=json.dumps(data))
-        if response.status_code != 200:
-            print(f"Request to Slack returned an error {response.status_code}, the response is:\n{response.text}")
-            return False
-        return True
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        response = requests.post(webhook_url, headers=headers, data=json.dumps({'text': message}))
+        return response.status_code == 200
+    except Exception:
         return False
-
-# Configuration de la page
 
 
 st.set_page_config(
-    page_title="Portfolio Francois Lenne",
+    page_title="François Lenne — Data Engineer",
     page_icon=":page_with_curl:",
     layout="wide",
-    initial_sidebar_state="expanded",
-    menu_items={
-        'Get Help': 'https://www.extremelycoolapp.com/help',
-        'Report a bug': "https://www.extremelycoolapp.com/bug",
-        'About': "# This is a header. This is an *extremely* cool app!"
-    }
+    initial_sidebar_state="collapsed",
 )
-
-
 
 current_repo = os.path.dirname(os.path.abspath(__file__))
 
+st.logo(f"{current_repo}/assets/linkedin-svg.svg", link='https://www.linkedin.com/in/fran%C3%A7ois-lenne-5975b9174/')
+
+st.markdown("""
+<style>
+/* Hide Streamlit default top padding */
+.block-container { padding-top: 2rem; }
+
+/* Hero */
+.hero {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    padding: 32px 0 40px;
+}
+.hero-avatar {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.hero-text h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+}
+.hero-role {
+    font-size: 1.05rem;
+    opacity: 0.55;
+    margin: 0 0 16px;
+    font-weight: 400;
+}
+.hero-bio {
+    font-size: 1rem;
+    line-height: 1.65;
+    max-width: 540px;
+    margin: 0 0 20px;
+    opacity: 0.85;
+}
+.hero-links {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.hero-links a img { display: block; }
+
+/* Project card body */
+.card-body { padding: 6px 2px 4px; }
+.card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 6px;
+}
+.card-desc {
+    font-size: 0.87rem;
+    opacity: 0.65;
+    line-height: 1.5;
+    margin: 0 0 10px;
+}
+.card-link {
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+</style>
+""", unsafe_allow_html=True)
 
 
-st.logo(f"{current_repo}/assets/linkedin-svg.svg", link= 'https://www.linkedin.com/in/fran%C3%A7ois-lenne-5975b9174/' )
+# ── Hero ─────────────────────────────────────────────────────────────────────
 
+avatar_url = "https://avatars.githubusercontent.com/u/114836746?v=4"
 
-space(lines = 4)
-
-# Titre au milieu de la page
-
-st.markdown(
-    """
-    <div style="display: flex; justify-content: center;">
-        <h1> Welcome to my portfolio </h1>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-
-# URL de l'image
-image_url = "https://avatars.githubusercontent.com/u/114836746?v=4"
-
-# CSS pour l'image ronde et le conteneur
-st.markdown(
-    """
-    <style>
-    .round-img {
-        border-radius: 50%;
-        width: 400px; /* Ajustez la taille selon vos besoins */
-        height: 400px; /* Ajustez la taille selon vos besoins */
-        object-fit: cover;
-    }
-    .container {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-    .text-container {
-        display: flex;
-        flex-direction: column;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-
-
-# Conteneur principal
-st.markdown(
-    f"""
-    <div class="container">
-        <img src="{image_url}" class="round-img">
-        <div class="text-container">
-            <h1>Francois Lenne</h1>
-            <p> Hi, i'am a french data engineer  Don't hesitate to take a look of my projects or my skills and contact me if you want to reach me ! </p>
-            <p align="center">
-              <a href="https://go-skill-icons.vercel.app/">
-                <img src="https://go-skill-icons.vercel.app/api/icons?i=py,js,pandas,r,bash,git,gcp,snowflake,github,githubactions,pbi,vscode,githubcopilot" />
-              </a>
-            </p>
+st.markdown(f"""
+<div class="hero">
+    <img class="hero-avatar" src="{avatar_url}" alt="François Lenne">
+    <div class="hero-text">
+        <h1>François Lenne</h1>
+        <p class="hero-role">Data Engineer</p>
+        <p class="hero-bio">
+            French data engineer building reliable pipelines and data platforms.
+            I work across GCP, Snowflake and AWS — and I enjoy automating the boring parts.
+        </p>
+        <div class="hero-links">
+            <a href="https://www.linkedin.com/in/fran%C3%A7ois-lenne-5975b9174/" target="_blank">
+                <img src="https://go-skill-icons.vercel.app/api/icons?i=linkedin" height="30">
+            </a>
+            <a href="https://github.com/Francois-lenne" target="_blank">
+                <img src="https://go-skill-icons.vercel.app/api/icons?i=github" height="30">
+            </a>
         </div>
+        <img src="https://go-skill-icons.vercel.app/api/icons?i=py,pandas,bash,git,gcp,snowflake,aws,github,githubactions,pbi" alt="tech stack">
     </div>
-    """,
-    unsafe_allow_html=True
-)
+</div>
+""", unsafe_allow_html=True)
+
+st.divider()
 
 
-space(lines = 8)
+# ── Projects ──────────────────────────────────────────────────────────────────
 
-
-st.header("Skills")
-
-st.subheader("Soft Skills")
-
-# CSS pour centrer le conteneur principal
-st.markdown(
-    """
-    <style>
-    .center-container {
-        display: flex;
-        justify-content: center;
-    }
-    .center-content {
-        width: 100%;
-        max-width: 800px; /* Ajustez cette largeur selon vos besoins */
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* Trois colonnes */
-        gap: 20px; /* Ajustez cet écart selon vos besoins */
-        justify-items: center; /* Centre les éléments horizontalement */
-        align-items: center; /* Centre les éléments verticalement */
-    }
-    .grid-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-# Conteneur principal centré
-st.markdown('<div class="center-container"><div class="center-content">', unsafe_allow_html=True)
-
-skills = ["Curious", "team player", "adaptability", "problem solver", "Relational Skills", "Organize"]
-image_path = [
-    f"{current_repo}/assets/curious.png",
-    f"{current_repo}/assets/team-player.png",
-    f"{current_repo}/assets/adaptability.png",
-    f"{current_repo}/assets/problem-solver.png",
-    f"{current_repo}/assets/communication.png",
-    f"{current_repo}/assets/organize.png"
-]
-
-# Affichage des skills en trois colonnes
-for i in range(0, len(skills), 3):
-    cols = st.columns(3)
-    for j, col in enumerate(cols):
-        if i + j < len(skills):
-            with col:
-                st.image(image_path[i+j], width=160)
-                space(lines = 1)
-                st.markdown(f"<p style='font-size: 30px; font-weight: bold;'>{skills[i + j]}</p>", unsafe_allow_html=True)
-
-st.markdown('</div></div>', unsafe_allow_html=True)
-
-
-space(lines = 5)
-
-st.subheader("Hard Skills")
-
-
-
-
-# CSS pour centrer le conteneur principal
-st.markdown(
-    """
-    <style>
-    .center-container {
-        display: flex;
-        justify-content: center;
-    }
-    .center-content {
-        width: 100%;
-        max-width: 800px; /* Ajustez cette largeur selon vos besoins */
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* Trois colonnes */
-        gap: 20px; /* Ajustez cet écart selon vos besoins */
-        justify-items: center; /* Centre les éléments horizontalement */
-        align-items: center; /* Centre les éléments verticalement */
-    }
-    .grid-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-# Conteneur principal centré
-st.markdown('<div class="center-container"><div class="center-content">', unsafe_allow_html=True)
-
-skills = ["Quering data", "ETL", "data modeling", "data quality", "write code", "cloud computing"]
-image_path = [
-    f"{current_repo}/assets/interact-data.png",
-    f"{current_repo}/assets/etl.png",
-    f"{current_repo}/assets/data-modeling.png",
-    f"{current_repo}/assets/quality.png",
-    f"{current_repo}/assets/code.png",
-    f"{current_repo}/assets/cloud-computing.png"
-]
-
-
-# Affichage des skills en trois colonnes
-for i in range(0, len(skills), 3):
-    cols = st.columns(3)
-    for j, col in enumerate(cols):
-        if i + j < len(skills):
-            with col:
-                st.image(image_path[i+j], width=160)
-                st.markdown(f"<p style='font-size: 30px; font-weight: bold;'>{skills[i + j]}</p>", unsafe_allow_html=True)
-
-st.markdown('</div></div>', unsafe_allow_html=True)
-
-
-
-space(lines = 5)
-
-
-# Partie Projets
 st.header("Projects")
+st.write("")
 
-space(lines = 3)
-
-# variable contenant la description des projets
-
-description_play = "This project is about retriving data from my playstation account (time and game play) and store it in Bigquery"
-
-
-description_biomethan = "This project is about retriving data from the french production of Biomethan and store it in Snowflake using GCP and snowflake tools to ingest csv automatically"
-
-description_github = "This project is about retriving data from the github account and store it in Redshift"
-
-
-Speedtest = "This project is about monitoring the speedtest of my internet connection and store it in postgresql"
-
-portofolio = "This project is about creating my portofolio using streamlit"
-
-
-vehicles = "This project is about monitoring the electric vehicle fleet in the us"
-
-
-# Exemple de données pour les projets
 projects = [
-    {"image": f"{current_repo}/assets/playsation_illus.jpg", "title": "Retriving Playsation data in Bigquery", "description": description_play, "link": "https://github.com/Francois-lenne/play-bq-gcp", "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,bigquery,googlecloud&titles=true"},
-    {"image": f"{current_repo}/assets/biogaz.jpg", "title": "Retriving the french production of Biomethan in Snowflake", "description": description_biomethan, "link": "https://github.com/Francois-lenne/biomethane", "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,googlecloud,snowflake&titles=true"},
-    {"image": f"{current_repo}/assets/github-data.jpg", "title": "Retrieve the Github data account in Redshift", "description": description_github, "link": "https://github.com/Francois-lenne/data_github", "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,redshift,aws&titles=true"},
-    {"image": f"{current_repo}/assets/speedtest.jpg", "title": "Speedtest monitoring", "description": Speedtest, "link": "https://github.com/Francois-lenne/speedtest_viz" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,postgresql,bash&titles=true"},
-    {"image": f"{current_repo}/assets/portofolio.jpg", "title": "My Portfolio", "description": portofolio, "link": "https://github.com/Francois-lenne/Portofolio_flenne_streamlit" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,streamlit&titles=true"},
-    {"image": f"{current_repo}/assets/vehicle_electric.jpg", "title": "Amaerica's electric vehicle fleet", "description": vehicles, "link": "https://github.com/Francois-lenne/eletric_vehicle_usa" , "icon": "https://go-skill-icons.vercel.app/api/icons?i=py,fabric,spark&titles=true"},
+    {
+        "image": f"{current_repo}/assets/playsation_illus.jpg",
+        "title": "PlayStation data → BigQuery",
+        "description": "Retrieving game time and play data from my PlayStation account and ingesting it into BigQuery.",
+        "link": "https://github.com/Francois-lenne/play-bq-gcp",
+        "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,bigquery,googlecloud&titles=true",
+    },
+    {
+        "image": f"{current_repo}/assets/biogaz.jpg",
+        "title": "French Biomethane production → Snowflake",
+        "description": "Automated CSV ingestion of French biomethane production data into Snowflake via GCP.",
+        "link": "https://github.com/Francois-lenne/biomethane",
+        "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,googlecloud,snowflake&titles=true",
+    },
+    {
+        "image": f"{current_repo}/assets/github-data.jpg",
+        "title": "GitHub account data → Redshift",
+        "description": "Extracting GitHub account metrics and loading them into Redshift for analysis.",
+        "link": "https://github.com/Francois-lenne/data_github",
+        "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,redshift,aws&titles=true",
+    },
+    {
+        "image": f"{current_repo}/assets/speedtest.jpg",
+        "title": "Internet speed monitoring",
+        "description": "Continuous monitoring of home internet speed stored in PostgreSQL and visualised.",
+        "link": "https://github.com/Francois-lenne/speedtest_viz",
+        "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,postgresql,bash&titles=true",
+    },
+    {
+        "image": f"{current_repo}/assets/portofolio.jpg",
+        "title": "This portfolio",
+        "description": "Building and deploying this portfolio with Streamlit on Cloud Run.",
+        "link": "https://github.com/Francois-lenne/Portofolio_flenne_streamlit",
+        "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,streamlit&titles=true",
+    },
+    {
+        "image": f"{current_repo}/assets/vehicle_electric.jpg",
+        "title": "US electric vehicle fleet",
+        "description": "Monitoring the electric vehicle fleet across the United States with Microsoft Fabric and Spark.",
+        "link": "https://github.com/Francois-lenne/eletric_vehicle_usa",
+        "icon": "https://go-skill-icons.vercel.app/api/icons?i=py,fabric,spark&titles=true",
+    },
 ]
 
-# Afficher les projets deux par deux
-for i in range(0, len(projects), 2):
-    cols = st.columns([1, 0.1, 1])  # Ajout d'une colonne vide pour l'écart
-    for j, col in enumerate([cols[0], cols[2]]):  # Utilisation des colonnes 0 et 2 pour les projets
-        if i + j < len(projects):
-            project = projects[i + j]
-            with col:
-                st.markdown(
-                    f"""
-                    <div style='border: 1px solid #ddd; padding: 10px; border-radius: 5px;'>
-                    """,
-                    unsafe_allow_html=True
-                )
+for i in range(0, len(projects), 3):
+    cols = st.columns(3, gap="medium")
+    for j, col in enumerate(cols):
+        if i + j >= len(projects):
+            break
+        p = projects[i + j]
+        with col:
+            with st.container(border=True):
+                st.image(Image.open(p["image"]), use_container_width=True)
+                st.markdown(f"""
+                <div class="card-body">
+                    <p class="card-title">{p['title']}</p>
+                    <p class="card-desc">{p['description']}</p>
+                    <a class="card-link" href="{p['link']}" target="_blank">View on GitHub →</a>
+                    <br><br>
+                    <img src="{p['icon']}" alt="stack" style="max-height:28px;">
+                </div>
+                """, unsafe_allow_html=True)
 
-                st.markdown(
-                    f"""
-                    <style>
-                    .project-image {{
-                                        max-height: 13px;  /* Définir la hauteur maximale souhaitée */
-                                        width: auto;
-                                        display: block;
-                                        margin-left: auto;
-                                        margin-right: auto;
-                                    }}
-                                    </style>
-                                    """,
-                                    unsafe_allow_html=True
-                    )
-                
-                # Open the image
-                image = Image.open(project["image"])
+st.divider()
 
-                # Display the image
-                st.image(image, use_column_width=True, output_format='png')
 
-                st.markdown(
-                    f"""
-                        <h2 style='text-align: center;'>{project['title']}</h2>
-                        <p style='text-align: center;'>{project['description']}</p>
-                        <p style='text-align: center;'><a href='{project['link']}' target='_blank'>Github</a></p>
-                        <p style='text-align: center;'><img src='{project['icon']}'  alt='My Skills'/></p>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+# ── Contact ───────────────────────────────────────────────────────────────────
 
-space(lines = 5)
-
-# Partie Me Contacter
 st.header("Contact me")
+st.write("")
 
-space(lines = 3)
-
-# Formulaire de contact
 with st.form(key='contact_form'):
-    name = st.text_input("Name")
-    email = st.text_input("Your email adress") 
+    col1, col2 = st.columns(2)
+    with col1:
+        name = st.text_input("Name")
+    with col2:
+        email = st.text_input("Email address")
     subject = st.text_input("Subject")
-    message = st.text_area("Message")
-    
-    submit_button = st.form_submit_button(label='Send')
+    message = st.text_area("Message", height=140)
+    submit = st.form_submit_button("Send message", use_container_width=True)
 
-if submit_button:
-    if len(name) == 0:
-        st.error("Enter your name.")
-    if len(email) == 0:
-        st.error("Enter an email adress.")
+if submit:
+    errors = []
+    if not name:
+        errors.append("Please enter your name.")
+    if not email:
+        errors.append("Please enter your email address.")
     elif not is_valid_email(email):
-        st.error("Enter a valid adress email")
-    if len(subject) == 0:
-        st.error("Enter the subject of your message.")
-    if len(message) == 0:
-        st.error("Enter a message.")
+        errors.append("Please enter a valid email address.")
+    if not subject:
+        errors.append("Please enter a subject.")
+    if not message:
+        errors.append("Please enter a message.")
+
+    if errors:
+        for err in errors:
+            st.error(err)
     else:
-        # Envoyer le message à Slack
         slack_message = f"Name: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}"
-        
         try:
-            success = send_slack_message(slack_message)
-            if success:
-                st.success("Your message is send ! I will contact you as soon as possible.")
+            if send_slack_message(slack_message):
+                st.success("Message sent! I'll get back to you as soon as possible.")
             else:
-                st.error("theres a problem with the message. Please try again later.")
+                st.error("Something went wrong. Please try again later.")
         except Exception as e:
-            st.error(f"theres a problem with the message. {str(e)}. please try again later.")
-
-
+            st.error(f"Something went wrong: {str(e)}")
