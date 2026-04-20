@@ -1,0 +1,6 @@
+project_id        = "your-gcp-project-id"
+region            = "europe-west1"
+repository_name   = "streamlit"
+image_name        = "streamlit-portfolio"
+service_name      = "flenne-portfolio"
+slack_webhook_url = "https://hooks.slack.com/services/..."

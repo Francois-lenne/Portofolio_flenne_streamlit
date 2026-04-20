@@ -1,24 +1,7 @@
 import streamlit as st
-import requests
 from PIL import Image
 import os
-import re
-import json
-
-
-def is_valid_email(email):
-    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    return re.match(pattern, email) is not None
-
-
-def send_slack_message(message):
-    webhook_url = os.getenv("SLACK_WEBHOOK_URL")
-    headers = {'Content-Type': 'application/json'}
-    try:
-        response = requests.post(webhook_url, headers=headers, data=json.dumps({'text': message}))
-        return response.status_code == 200
-    except Exception:
-        return False
+from utils.helpers import is_valid_email, send_slack_message
 
 
 st.set_page_config(
@@ -29,8 +12,9 @@ st.set_page_config(
 )
 
 current_repo = os.path.dirname(os.path.abspath(__file__))
+assets_dir = os.path.join(current_repo, "assets")
 
-st.logo(f"{current_repo}/assets/linkedin-svg.svg", link='https://www.linkedin.com/in/fran%C3%A7ois-lenne-5975b9174/')
+st.logo(f"{assets_dir}/linkedin-svg.svg", link='https://www.linkedin.com/in/fran%C3%A7ois-lenne-5975b9174/')
 
 st.markdown("""
 <style>
@@ -134,42 +118,42 @@ st.write("")
 
 projects = [
     {
-        "image": f"{current_repo}/assets/playsation_illus.jpg",
+        "image": f"{assets_dir}/playsation_illus.jpg",
         "title": "PlayStation data → BigQuery",
         "description": "Retrieving game time and play data from my PlayStation account and ingesting it into BigQuery.",
         "link": "https://github.com/Francois-lenne/play-bq-gcp",
         "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,bigquery,googlecloud&titles=true",
     },
     {
-        "image": f"{current_repo}/assets/biogaz.jpg",
+        "image": f"{assets_dir}/biogaz.jpg",
         "title": "French Biomethane production → Snowflake",
         "description": "Automated CSV ingestion of French biomethane production data into Snowflake via GCP.",
         "link": "https://github.com/Francois-lenne/biomethane",
         "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,googlecloud,snowflake&titles=true",
     },
     {
-        "image": f"{current_repo}/assets/github-data.jpg",
+        "image": f"{assets_dir}/github-data.jpg",
         "title": "GitHub account data → Redshift",
         "description": "Extracting GitHub account metrics and loading them into Redshift for analysis.",
         "link": "https://github.com/Francois-lenne/data_github",
         "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,redshift,aws&titles=true",
     },
     {
-        "image": f"{current_repo}/assets/speedtest.jpg",
+        "image": f"{assets_dir}/speedtest.jpg",
         "title": "Internet speed monitoring",
         "description": "Continuous monitoring of home internet speed stored in PostgreSQL and visualised.",
         "link": "https://github.com/Francois-lenne/speedtest_viz",
         "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,postgresql,bash&titles=true",
     },
     {
-        "image": f"{current_repo}/assets/portofolio.jpg",
+        "image": f"{assets_dir}/portofolio.jpg",
         "title": "This portfolio",
         "description": "Building and deploying this portfolio with Streamlit on Cloud Run.",
         "link": "https://github.com/Francois-lenne/Portofolio_flenne_streamlit",
         "icon": "https://go-skill-icons.vercel.app/api/icons?i=python,streamlit&titles=true",
     },
     {
-        "image": f"{current_repo}/assets/vehicle_electric.jpg",
+        "image": f"{assets_dir}/vehicle_electric.jpg",
         "title": "US electric vehicle fleet",
         "description": "Monitoring the electric vehicle fleet across the United States with Microsoft Fabric and Spark.",
         "link": "https://github.com/Francois-lenne/eletric_vehicle_usa",
