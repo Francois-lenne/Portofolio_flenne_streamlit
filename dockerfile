@@ -1,22 +1,21 @@
-# Use the official Python image from the Docker Hub
-FROM python:3.9-slim
+FROM python:3.11-slim
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy the requirements.txt file into the container
-COPY requirements.txt .
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 
-# Install the dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy dependency files
+COPY pyproject.toml uv.lock ./
 
-# Copy the rest of the application code into the container
+# Install dependencies (no venv, system install)
+RUN uv sync --frozen --no-dev --no-install-project
+
+# Copy application code
 COPY . .
 
-# Expose the port that Streamlit will run on
 EXPOSE 8501
 
-ENV PORT 8080
+ENV PORT=8080
 
-# Command to run the Streamlit app
-CMD ["streamlit", "run", "main.py", "--server.port", "8080", "--server.enableCORS", "false"]
+CMD ["uv", "run", "streamlit", "run", "main.py", "--server.port", "8080", "--server.enableCORS", "false"]

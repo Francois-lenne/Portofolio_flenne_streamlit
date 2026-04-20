@@ -1,12 +1,15 @@
-# Ignore the portofolio directory
+
+,# Ignore the portofolio directory
 portofolio/
+portfolio/
 .venv/
+.venv/*
 .devcontainer/*
 .vscode/
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.venv/*
-portfolio/
 .streamlit
+# uv
+.uv/

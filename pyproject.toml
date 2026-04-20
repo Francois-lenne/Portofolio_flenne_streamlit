@@ -1,0 +1,10 @@
+[project]
+name = "portofolio-flenne-streamlit"
+version = "0.1.0"
+description = "Personal portfolio built with Streamlit"
+requires-python = ">=3.11"
+dependencies = [
+    "streamlit>=1.44.0",
+    "requests>=2.32.3",
+    "pillow>=10.4.0",
+]
