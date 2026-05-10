@@ -1,8 +1,3 @@
-variable "project_id" {
-  description = "GCP project ID"
-  type        = string
-}
-
 variable "region" {
   description = "GCP region"
   type        = string
@@ -21,15 +16,13 @@ variable "image_name" {
   default     = "streamlit-portfolio"
 }
 
-variable "service_name" {
-  description = "Cloud Run service name"
+variable "image_tag" {
+  description = "Tag de l'image Docker à déployer"
   type        = string
-  default     = "flenne-portfolio"
 }
 
-variable "slack_webhook_url" {
-  description = "Slack webhook URL for contact form"
+variable "slack_secret_name" {
+  description = "Nom du secret Secret Manager contenant le Slack webhook URL"
   type        = string
-  sensitive   = true
-  default     = ""
+  default     = "slack-webhook-url"
 }

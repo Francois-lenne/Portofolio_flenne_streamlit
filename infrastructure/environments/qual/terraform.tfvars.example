@@ -1,0 +1,5 @@
+region            = "europe-west1"
+repository_name   = "streamlit"
+image_name        = "streamlit-portfolio"
+image_tag         = "qual-latest"
+slack_secret_name = "slack-webhook-url"   # nom du secret dans Secret Manager

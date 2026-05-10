@@ -1,0 +1,54 @@
+# Déclenché sur push vers la branche `qual`
+# Cloud Run en mode INTERNAL — non exposé sur internet
+
+steps:
+  # 1. Build de l'image Docker
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '--platform'
+      - 'linux/amd64'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY_NAME}/${_IMAGE_NAME}:${SHORT_SHA}'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY_NAME}/${_IMAGE_NAME}:qual-latest'
+      - '.'
+    id: 'build-image'
+
+  # 2. Push des deux tags
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '--all-tags', '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY_NAME}/${_IMAGE_NAME}']
+    id: 'push-image'
+
+  # 3. Déploiement Cloud Run en mode interne (pas d'accès public)
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'flenne-portfolio-qual'
+      - '--image'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY_NAME}/${_IMAGE_NAME}:${SHORT_SHA}'
+      - '--region'
+      - '${_REGION}'
+      - '--platform'
+      - 'managed'
+      - '--no-allow-unauthenticated'
+      - '--ingress'
+      - 'internal'
+      - '--set-env-vars'
+      - 'ENV=qual'
+      - '--memory'
+      - '512Mi'
+      - '--max-instances'
+      - '2'
+    id: 'deploy-to-cloud-run'
+
+substitutions:
+  _REGION: 'europe-west1'
+  _REPOSITORY_NAME: 'streamlit'
+  _IMAGE_NAME: 'streamlit-portfolio'
+
+images:
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY_NAME}/${_IMAGE_NAME}:${SHORT_SHA}'
+
+timeout: '1200s'
