@@ -51,4 +51,7 @@ substitutions:
 images:
   - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY_NAME}/${_IMAGE_NAME}:${SHORT_SHA}'
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 timeout: '1200s'
