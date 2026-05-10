@@ -38,7 +38,7 @@ steps:
       - '--set-env-vars'
       - 'ENV=dev'
       - '--memory'
-      - '256Mi'
+      - '512Mi'
       - '--max-instances'
       - '1'
     id: 'deploy-to-cloud-run'
