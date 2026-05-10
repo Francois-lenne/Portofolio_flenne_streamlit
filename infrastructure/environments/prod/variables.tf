@@ -26,3 +26,9 @@ variable "slack_secret_name" {
   type        = string
   default     = "slack-webhook-url"
 }
+
+variable "custom_domain" {
+  description = "Nom de domaine custom à mapper sur Cloud Run prod"
+  type        = string
+  default     = "francoislenne.io"
+}

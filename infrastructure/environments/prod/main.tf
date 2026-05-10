@@ -42,3 +42,19 @@ module "cloud_run" {
 
   depends_on = [google_artifact_registry_repository.portfolio]
 }
+
+# ── Custom domain mapping ──────────────────────────────────────────────────────
+# Prérequis : domaine vérifié dans Google Search Console
+
+resource "google_cloud_run_domain_mapping" "prod" {
+  location = var.region
+  name     = var.custom_domain
+
+  metadata {
+    namespace = data.google_client_config.current.project
+  }
+
+  spec {
+    route_name = module.cloud_run.service_name
+  }
+}
